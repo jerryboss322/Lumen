@@ -1,0 +1,10 @@
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import { redirect } from 'next/navigation'
+import { PrismaClient } from '@prisma/client'
+const prisma=new PrismaClient()
+export default async function Admin(){
+  const s=await getServerSession(authOptions);if(!s||(s.user as any).role!=='ADMIN')redirect('/auth/login')
+  const users=await prisma.user.findMany();const products=await prisma.product.findMany()
+  return(<div style={{maxWidth:1200,margin:'0 auto',padding:40}}><h1 style={{marginBottom:8}}>Admin Dashboard</h1><p style={{color:'#666',marginBottom:32}}>Welcome, {s.user?.name}</p><div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16,marginBottom:32}}><div style={{padding:20,border:'1px solid #eee',borderRadius:12}}><div style={{fontSize:28,fontWeight:700}}>{users.length}</div><div style={{color:'#666'}}>Total Users</div></div><div style={{padding:20,border:'1px solid #eee',borderRadius:12}}><div style={{fontSize:28,fontWeight:700}}>{users.filter(u=>u.role==='ADMIN').length}</div><div style={{color:'#666'}}>Admins</div></div><div style={{padding:20,border:'1px solid #eee',borderRadius:12}}><div style={{fontSize:28,fontWeight:700}}>{products.length}</div><div style={{color:'#666'}}>Products</div></div></div><h2 style={{marginBottom:16}}>Users</h2><div style={{border:'1px solid #eee',borderRadius:12,overflow:'hidden'}}><table style={{width:'100%',borderCollapse:'collapse'}}><thead style={{background:'#fafafa'}}><tr><th style={{textAlign:'left',padding:12,borderBottom:'1px solid #eee'}}>Name</th><th style={{textAlign:'left',padding:12,borderBottom:'1px solid #eee'}}>Email</th><th style={{textAlign:'left',padding:12,borderBottom:'1px solid #eee'}}>Role</th></tr></thead><tbody>{users.map(u=>(<tr key={u.id}><td style={{padding:12,borderBottom:'1px solid #f5f5f5'}}>{u.name}</td><td style={{padding:12,borderBottom:'1px solid #f5f5f5'}}>{u.email}</td><td style={{padding:12,borderBottom:'1px solid #f5f5f5'}}><span style={{padding:'4px 8px',borderRadius:6,fontSize:12,background:u.role==='ADMIN'?'#fef3c7':'#f3f4f6'}}>{u.role}</span></td></tr>))}</tbody></table></div></div>)
+}

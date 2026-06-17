@@ -1,22 +1,37 @@
+# LUMEN Ecommerce - Ready to Deploy
 
-# ATELIER Ecommerce - Production Ready
+## Deploy to Vercel (3 minutes)
 
-## Features Implemented
-- ✓ NextAuth credentials (no localStorage)
-- ✓ Role-based access: ADMIN vs CUSTOMER
-- ✓ Only jerryadewole2023@gmail.com is admin
-- ✓ Signup forces CUSTOMER role
-- ✓ Middleware blocks /admin for customers
-- ✓ Light and Peach themes (no dark mode)
-- ✓ All buttons tested
+1. Push to GitHub:
+```bash
+git add .
+git commit -m "Deploy ready"
+git push
+```
 
-## Setup
-1. npm install
-2. cp .env.example .env
-3. npx prisma db push
-4. npm run seed
-5. npm run dev
+2. Go to vercel.com → Add New Project → Import jerryboss322/Lumen
+
+3. Add Environment Variables:
+- DATABASE_URL = (Vercel will auto-create Neon DB, or paste your Neon URL)
+- NEXTAUTH_SECRET = any random 32-char string
+- NEXTAUTH_URL = https://your-app.vercel.app
+
+4. Deploy → Vercel runs build automatically
+
+5. After deploy, run seed once:
+```bash
+vercel env pull
+npx prisma db push
+npm run seed
+```
 
 ## Test Accounts
-Admin: jerryadewole2023@gmail.com / Sajnli25
-Customer: customer1@test.com / customer123
+- Admin: jerryadewole2023@gmail.com / Sajnli25
+- Customer: customer1@test.com / customer123
+
+## Features
+✓ No dark mode (light + peach only)
+✓ NextAuth with roles
+✓ Only you are admin
+✓ Customers cannot access /admin
+✓ All buttons tested

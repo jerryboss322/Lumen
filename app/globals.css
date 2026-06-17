@@ -1,0 +1,4 @@
+:root{--bg:#fff;--text:#0f1115;--card:#fff;--border:#e5e7eb;--accent:#C9873A}
+[data-theme="peach"]{--bg:#fff6ee;--text:#2a1a12;--card:#fff;--border:#f2dfd1;--accent:#ea6a3b}
+*{box-sizing:border-box;margin:0;padding:0}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif}
+a{color:inherit;text-decoration:none}button{cursor:pointer;font:inherit}
